@@ -2,33 +2,43 @@
 
 
 #include "Player/CPlayerCharacter.h"
+#include "Camera/CameraComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/PlayerController.h"
 
-// Sets default values
 ACPlayerCharacter::ACPlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>("Camera Boom");
+	CameraBoom->SetupAttachment(GetRootComponent());
 
+	ViewCam = CreateDefaultSubobject<UCameraComponent>("View Cam");
+	ViewCam->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 }
 
-// Called when the game starts or when spawned
-void ACPlayerCharacter::BeginPlay()
+void ACPlayerCharacter::PawnClientRestart()
 {
-	Super::BeginPlay();
-	
+	Super::PawnClientRestart();
+	APlayerController* OwningPlayerController = GetController<APlayerController>();
+	if (OwningPlayerController)
+	{
+		UEnhancedInputLocalPlayerSubsystem* InputSubsystem = OwningPlayerController->GetLocalPlayer()->GetSubsystem<
+			UEnhancedInputLocalPlayerSubsystem>();
+		if (InputSubsystem)
+		{
+			InputSubsystem->RemoveMappingContext(GameplayInputMappingContext);
+			InputSubsystem->AddMappingContext(GameplayInputMappingContext, 0);
+		}
+	}
 }
 
-// Called every frame
-void ACPlayerCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
 void ACPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	UEnhancedInputComponent* EnhancedInputComp = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if (EnhancedInputComp)
+	{
+		EnhancedInputComp->BindAction(JumpInputAction, ETriggerEvent::Triggered, this, &ACPlayerCharacter::Jump);
+	}
 }
-
