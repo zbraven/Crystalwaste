@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include  "InputActionValue.h"
 #include "GameFramework/Character.h"
 #include "CPlayerCharacter.generated.h"
 
@@ -21,10 +22,15 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	class UCameraComponent* ViewCam;
-
+ 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* JumpInputAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* LookInputAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputMappingContext* GameplayInputMappingContext;
+
+	void HandleLookInputAction(const FInputActionValue& InputActionValue);	
 };
