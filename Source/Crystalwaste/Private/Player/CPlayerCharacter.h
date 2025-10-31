@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include  "InputActionValue.h"
-#include "GameFramework/Character.h"
+#include "Character/CCharacter.h"
 #include "CPlayerCharacter.generated.h"
 
 UCLASS()
-class ACPlayerCharacter : public ACharacter
+class ACPlayerCharacter : public ACCharacter
 {
 	GENERATED_BODY()
 
@@ -16,6 +16,8 @@ public:
 	ACPlayerCharacter();
 	virtual void PawnClientRestart() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
 private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	class USpringArmComponent* CameraBoom;
