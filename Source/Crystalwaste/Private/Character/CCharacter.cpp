@@ -41,7 +41,6 @@ bool ACCharacter::IsLocallyControlledByPlayer() const
 void ACCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 	ConfigureOverHeadStatusWidget();
 }
 
@@ -92,9 +91,7 @@ void ACCharacter::ConfigureOverHeadStatusWidget()
 		OverheadStatsGuage->ConfigureWithASC(GetAbilitySystemComponent());
 		OverHeadWidgetComponent->SetHiddenInGame(false);
 		GetWorldTimerManager().ClearTimer(HeadStatGaugeVisibilityUpdateTimerHandle);
-		GetWorldTimerManager().SetTimer(HeadStatGaugeVisibilityUpdateTimerHandle, this,
-		                                &ACCharacter::UpdateHeadGaugeVisibility, HeadStatGaugeVisiblityCheckUpdateGap,
-		                                true);
+		GetWorldTimerManager().SetTimer(HeadStatGaugeVisibilityUpdateTimerHandle, this, &ACCharacter::UpdateHeadGaugeVisibility, HeadStatGaugeVisiblityCheckUpdateGap, true);
 	}
 }
 

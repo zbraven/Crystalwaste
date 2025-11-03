@@ -18,8 +18,7 @@ class UValueGauge : public UUserWidget
 
 public:
 	virtual void NativePreConstruct() override;
-	void SetAndBoundToGameplayAttribute(class UAbilitySystemComponent* AbilitySystemComponent,
-	                                    const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute);
+	void SetAndBoundToGameplayAttribute(class UAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute);
 	void SetValue(float NewValue, float NewMaxValue);
 
 private:

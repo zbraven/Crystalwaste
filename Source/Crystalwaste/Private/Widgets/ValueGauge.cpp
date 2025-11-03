@@ -11,11 +11,8 @@ void UValueGauge::NativePreConstruct()
 	Super::NativePreConstruct();
 	ProgressBar->SetFillColorAndOpacity(BarColor);
 }
-// --- Mevcut degerleri al ve mevcut goruntuyu guncelle ---
 
-void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* AbilitySystemComponent,
-                                                 const FGameplayAttribute& Attribute,
-                                                 const FGameplayAttribute& MaxAttribute)
+void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute)
 {
 	if (AbilitySystemComponent)
 	{
@@ -27,13 +24,11 @@ void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* Abilit
 			SetValue(Value, MaxValue);
 		}
 
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(
-			this, &UValueGauge::ValueChanged);
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(MaxAttribute).AddUObject(
-			this, &UValueGauge::MaxValueChanged);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(this, &UValueGauge::ValueChanged);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(MaxAttribute).AddUObject(this, &UValueGauge::MaxValueChanged);
 	}
 }
-// ---Cache et degisim envanterlerine abone ol---
+
 void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 {
 	CachedValue = NewValue;
@@ -58,7 +53,7 @@ void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 		)
 	);
 }
-// ---  Delegate Eventleri ---
+
 void UValueGauge::ValueChanged(const FOnAttributeChangeData& ChangedData)
 {
 	SetValue(ChangedData.NewValue, CachedMaxValue);
