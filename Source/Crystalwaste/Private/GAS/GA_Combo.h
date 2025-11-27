@@ -21,11 +21,18 @@ public:
 	static FGameplayTag GetComboChangedEventEndTag();
 
 private:
+	void SetupWaitComboInputPress();
+
+	UFUNCTION()
+	void HandleInputPress(float TimeWaited);
+
+	void TryCommitCombo();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animation") // Blueprint’ten atayabileceğimiz animasyon montajı
 	UAnimMontage* ComboMontage;
 
 	UFUNCTION()
-	void ComboChangedEventReceived(FGameplayEventData Data); 
+	void ComboChangedEventReceived(FGameplayEventData Data);
 
 	FName NextComboName;
 };
